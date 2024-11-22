@@ -23,6 +23,17 @@
         <div id="unity-build-title">WebGL</div>
       </div>
     </div>
+
+    <!-- シーン切り替えボタン -->
+    <div id="scene-buttons" style="text-align: center; margin-top: 20px;">
+      <button onclick="switchScene('LoadTitleScene')">Go to Title Scene</button>
+      <button onclick="switchScene('LoadExampleScene')">Go to Example Scene</button>
+      <button onclick="switchScene('LoadEditScene_1')">Go to Edit Scene 1</button>
+      <button onclick="switchScene('LoadEditScene_2')">Go to Edit Scene 2</button>
+      <button onclick="switchScene('LoadPerformScene_1')">Go to Perform Scene 1</button>
+      <button onclick="switchScene('LoadPerformScene_2')">Go to Perform Scene 2</button>
+    </div>
+
     <script>
 
       var container = document.querySelector("#unity-container");
@@ -110,13 +121,22 @@
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
+                window.unityInstance = unityInstance;
               }).catch((message) => {
                 alert(message);
               });
             };
 
       document.body.appendChild(script);
-
+      
+      // JavaScriptからUnityのシーン切り替えを呼び出す
+      function switchScene(functionName) {
+        if (window.unityInstance) {
+          window.unityInstance.SendMessage('SceneController', functionName);
+        } else {
+          console.error("Unity instance is not initialized.");
+        }
+      }
     </script>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app-compat.js"></script>
