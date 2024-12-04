@@ -25,13 +25,14 @@
     </div>
 
     <!-- シーン切り替えボタン -->
-    <div id="scene-buttons" style="text-align: center; margin-top: 20px;">
-      <button onclick="switchScene('LoadTitleScene')">Go to Title Scene</button>
-      <button onclick="switchScene('LoadExampleScene')">Go to Example Scene</button>
-      <button onclick="switchScene('LoadEditScene_1')">Go to Edit Scene 1</button>
-      <button onclick="switchScene('LoadEditScene_2')">Go to Edit Scene 2</button>
-      <button onclick="switchScene('LoadPerformScene_1')">Go to Perform Scene 1</button>
-      <button onclick="switchScene('LoadPerformScene_2')">Go to Perform Scene 2</button>
+    <div id="scene-buttons" style="text-align: center; margin-top: 20px; z-index: 1000; position: relative;">
+      <button style="padding: 10px 20px; margin: 5px; font-size: 16px;" onclick="switchScene('LoadTitleScene')">Go to Title Scene</button>
+      <button style="padding: 10px 20px; margin: 5px; font-size: 16px;" onclick="switchScene('LoadExampleScene')">Go to Example Scene</button>
+      <button style="padding: 10px 20px; margin: 5px; font-size: 16px;" onclick="switchScene('LoadEditScene_1')">Go to Edit Scene 1</button>
+      <button style="padding: 10px 20px; margin: 5px; font-size: 16px;" onclick="switchScene('LoadEditScene_2')">Go to Edit Scene 2</button>
+      <button style="padding: 10px 20px; margin: 5px; font-size: 16px;" onclick="switchScene('LoadDistanceScene')">Go to Distance Scene</button>
+      <button style="padding: 10px 20px; margin: 5px; font-size: 16px;" onclick="switchScene('LoadPerformScene_1')">Go to Perform Scene 1</button>
+      <button style="padding: 10px 20px; margin: 5px; font-size: 16px;" onclick="switchScene('LoadPerformScene_2')">Go to Perform Scene 2</button>
     </div>
 
     <script>
@@ -121,7 +122,7 @@
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
-                window.unityInstance = unityInstance;
+                window.unityInstance = unityInstance; // グローバルにUnityインスタンスを設定
               }).catch((message) => {
                 alert(message);
               });
@@ -129,8 +130,8 @@
 
       document.body.appendChild(script);
       
-      // JavaScriptからUnityのシーン切り替えを呼び出す
       function switchScene(functionName) {
+        console.log("Switching scene to:", functionName);
         if (window.unityInstance) {
           window.unityInstance.SendMessage('SceneController', functionName);
         } else {
